@@ -20,20 +20,21 @@
      event="openSettingsMenuEvent"
      rounded="false">
   </Button>
+
   <BitmapBox
      tag="currentBitmapBox"
-     dim="0.51f, 0.07f, 0.48f, 0.48f">
+     dim="0.20f, 0.80f, 0.20f, 0.15f">
   </BitmapBox>
 
   <GUITextSelectionList
      tag="GSSelList"
-     dim="0.01f, 0.07f, 0.49f, 0.79f">
+     dim="0.01f, 0.07f, 0.98f, 0.65f">
   </GUITextSelectionList>
 
   <Button
      tag="plusMoreButton"
      name="+ More"
-     dim="0.125f, 0.865f, 0.25f, 0.07f"
+     dim="0.01f, 0.80f, 0.15f, 0.15f"
      event="GMDownloadDlgOpen"
      rounded="false">
   </Button>
@@ -41,7 +42,7 @@
   <Button
      tag="startButton"
      name="Start >"
-     dim="0.60f, 0.865f, 0.25f, 0.07f"
+     dim="0.80f, 0.80f, 0.15f, 0.15f"
      event="GMStart"
      rounded="false">
   </Button>
@@ -49,17 +50,17 @@
   <Text
      name="Episode"
      tag="EpisodeText"
-     dim="0.5f, 0.70f, 0.5f, 0.05f">
+     dim="0.3f, 0.80f, 0.5f, 0.05f">
   </Text>
   <Text
      name="Version"
      tag="VersionText"
-     dim="0.5f, 0.75f, 0.5f, 0.05f">
+     dim="0.3f, 0.85f, 0.5f, 0.05f">
   </Text>
   <Text
      name="Demo"
      tag="DemoText"
-     dim="0.5f, 0.80f, 0.5f, 0.05f">
+     dim="0.3f, 0.90f, 0.5f, 0.05f">
   </Text>
 
   <GUIBanner
