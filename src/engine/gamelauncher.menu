@@ -42,7 +42,7 @@
   <Button
      tag="startButton"
      name=">"
-     dim="0.80f, 0.80f, 0.15f, 0.15f"
+     dim="0.84f, 0.80f, 0.15f, 0.15f"
      event="GMStart"
      rounded="false">
   </Button>
