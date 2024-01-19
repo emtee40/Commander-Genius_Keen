@@ -92,10 +92,7 @@ public:
     int getSelection() const
     {	return mSelection;	}
 
-    void setSelection(const int sel)
-    {
-        mSelection = sel;
-    }
+    void setSelection(const int sel);
 
     template <class T>
     void setCurrentControl(std::shared_ptr<T> &control)

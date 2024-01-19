@@ -33,7 +33,7 @@
 
   <Button
      tag="plusMoreButton"
-     name="+ More"
+     name="+"
      dim="0.01f, 0.80f, 0.15f, 0.15f"
      event="GMDownloadDlgOpen"
      rounded="false">
@@ -41,7 +41,7 @@
 
   <Button
      tag="startButton"
-     name="Start >"
+     name=">"
      dim="0.80f, 0.80f, 0.15f, 0.15f"
      event="GMStart"
      rounded="false">

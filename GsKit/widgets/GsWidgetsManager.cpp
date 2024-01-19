@@ -92,6 +92,12 @@ void GsWidgetsManager::processLogic()
 }
 
 
+void GsWidgetsManager::setSelection(const int sel)
+{
+    mSelection = sel;
+    applySelection();
+}
+
 void GsWidgetsManager::applySelection()
 {
     // Find the right control!

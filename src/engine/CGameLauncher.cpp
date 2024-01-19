@@ -261,7 +261,7 @@ bool GameLauncher::setupMenu()
         ss << "No games detected!\n";
         ss << "You can copy some into:\n";
         ss << "\"" << solvedPath << "\",\n";
-        ss << "or download using \"+ More\" button\n";
+        ss << "or download using \"+\" button\n";
         ss << "on the next page.\n";
 
         std::string msg(ss.str());
@@ -272,7 +272,8 @@ bool GameLauncher::setupMenu()
     }
 
     // Set the first game selected and highlight the start button
-    if(mpGSSelList) mpGSSelList->setSelection(0);
+    if(mpGSSelList)
+        mpGSSelList->setSelection(0);
 
     mLauncherDialog.setSelection(3);
 
@@ -724,7 +725,7 @@ void GameLauncher::setupModsDialog()
     mpPatchDialog->add(mpPatchSelList);
 
 
-    mpPatchDialog->add(new GsButton( "Start >",
+    mpPatchDialog->add(new GsButton( ">",
                                      GsRect<float>(0.65f, 0.865f, 0.3f, 0.07f),
                                      new GMPatchSelected() ));
 }
@@ -742,7 +743,7 @@ void GameLauncher::pumpEvent(const std::shared_ptr<CEvent> &evPtr)
 {
     if( std::dynamic_pointer_cast<const GMStart>(evPtr) )
     {
-        const int chosengame = mpGSSelList->getSelection();
+        const int chosengame = mSelection;
         setChosenGame(chosengame);
 
         // TODO: fetch the List of available patch files
@@ -783,7 +784,7 @@ void GameLauncher::pumpEvent(const std::shared_ptr<CEvent> &evPtr)
 
 
 
-    // Check Scroll events happening on this Launcher
+    // Check for scroll events
     if( const auto mwe = std::dynamic_pointer_cast<const MouseWheelEvent>(evPtr) )
     {
         // Wrapper for the simple mouse scroll event
@@ -842,43 +843,49 @@ void GameLauncher::ponderGameSelDialog(const float deltaT)
 
     if(mpGSSelList)
     {
-        // Check if the selection changed. Update the right data panel
-        if(mSelection != mpGSSelList->getSelection() &&
-           !mEntries.empty() )
+        if(mEntries.empty())
+        {
+            mpEpisodeText->setText("No games detected.");
+            mpVersionText->setText("");
+            mpDemoText->setText("");
+        }
+        else
+        {
+
+        // Check if the selection changed and update game data
+        if(mSelection != mpGSSelList->getSelection())
         {
             mSelection = mpGSSelList->getSelection();
 
             if(mSelection != -1)
-            {
-                const auto sel = static_cast<unsigned int>(mSelection);
-
-                // In case another list loaded, but we have an old selection
-                if(sel >= mEntries.size())
+            {                
+                // In case another list loaded, but we have an old selection, to be fixed
+                if(mSelection >= int(mEntries.size()))
                 {
                     mSelection = 0;
+                    mpGSSelList->setSelection(mSelection);
                 }
-                else
+
+                auto &entry = mEntries[mSelection];
+                const std::string nameText = "Episode " + itoa(entry.episode);
+                mpEpisodeText->setText(nameText);
+                float fVer = entry.version;
+                fVer /= 100.0f;
+                mpVersionText->setText("Version: " + ftoa(fVer));
+
+                if(mpDemoText)
                 {
-                    auto &entry = mEntries[sel];
-                    const std::string nameText = "Episode " + itoa(entry.episode);
-                    mpEpisodeText->setText(nameText);
-                    float fVer = entry.version;
-                    fVer /= 100.0f;
-                    mpVersionText->setText("Version: " + ftoa(fVer));
-
-                    if(mpDemoText)
-                    {
-                        mpDemoText->setText(entry.demo ? "Demo" : "");
-                    }
+                    mpDemoText->setText(entry.demo ? "Demo" : "");
+                }
 
 
-                    // Now update the bitmap
-                    if(mCurrentBmp)
-                    {
-                        mCurrentBmp->setBitmapPtr(mPreviewBmpPtrVec[sel]);
-                    }
+                // Now update the bitmap
+                if(mCurrentBmp)
+                {
+                    mCurrentBmp->setBitmapPtr(mPreviewBmpPtrVec[mSelection]);
                 }
             }
+        }
         }
     }
 
@@ -1039,10 +1046,10 @@ void GameLauncher::ponder(const float deltaT)
         mLauncherDialog.enable(true);
     }
 
-    // Button should disabled unless a game was selected
+    // Button should be disabled unless a game is selected
     if(mpStartButton && mpGSSelList)
-    {
-        const auto selection = mpGSSelList->getSelection();
+    {       
+        const auto selection = mSelection;
 
         if(selection >= 0 && selection < int(mEntries.size()))
         {

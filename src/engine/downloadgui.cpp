@@ -126,7 +126,7 @@ void DownloadGui::ponder(const float deltaT)
     int ret;
     if(threadPool->finalizeIfReady(mpCatalogDownloadThread, &ret))
     {
-        mpPlusMorebutton->setText("+ More");
+        mpPlusMorebutton->setText("+");
 
         if(ret == 0) // if everything went fine
         {
